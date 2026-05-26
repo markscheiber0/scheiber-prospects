@@ -34,8 +34,12 @@ The routine is configured at [claude.ai/code/routines](https://claude.ai/code/ro
 | `signal_source` | SOS / hiring / news / no-website / maps |
 | `signal_detail` | One-line description of what surfaced them |
 | `fit_note` | One-line "why they're a fit for SI" |
-| `status` | new / contacted / qualified / not-fit / dead |
+| `status` | new / drafted / contacted / qualified / not-fit / dead |
 | `notes` | Anything else worth keeping |
+| `outreach_method` | email / phone / facebook / none |
+| `last_contacted` | YYYY-MM-DD of last outreach actually sent (blank until sent) |
+| `outreach_count` | Number of outreach touches sent so far |
+| `next_followup` | YYYY-MM-DD to follow up, if scheduled |
 
 ## Working a prospect
 
@@ -47,6 +51,19 @@ When you contact, qualify, or disqualify a prospect, edit the row directly:
 4. Commit
 
 The routine only appends new rows. It does not overwrite your manual edits.
+
+## Outreach workflow
+
+Cold-email outreach is draft-first: a personalized email is created as a Gmail **draft** for each prospect that has an email address, and the row is set to `status = drafted`. Nothing is sent automatically.
+
+When you send a draft:
+
+1. Set `status` to `contacted`
+2. Set `last_contacted` to today and bump `outreach_count`
+3. Set `next_followup` if you want a reminder
+4. Update `last_updated` and commit
+
+Prospects without an email (`phone` / `facebook-only` only) can't be emailed yet; reach them by phone or find an email first.
 
 ## Adding industries or geography
 
